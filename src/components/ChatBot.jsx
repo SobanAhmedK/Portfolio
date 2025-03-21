@@ -16,7 +16,7 @@ function ChatBot() {
   useEffect(() => {
     const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
     setModel(genAI.getGenerativeModel({ model: "gemini-1.5-pro" }));
-  }, []);
+  }, []); 
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
