@@ -15,7 +15,7 @@ function ChatBot() {
 
   useEffect(() => {
     const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
-    setModel(genAI.getGenerativeModel({ model: "gemini-1.5-pro" }));
+    setModel(genAI.getGenerativeModel({ model: "gemini-2.0-flash" }));
   }, []); 
 
   useEffect(() => {
