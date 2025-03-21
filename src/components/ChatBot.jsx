@@ -32,7 +32,7 @@ function ChatBot() {
 
   try {
     // Wait for 1 second before making the API request (adjust as needed)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     const recentMessages = messages.length < 10 ? messages : messages.slice(-9);
     const formattedMessages = recentMessages.map((msg) => ({
