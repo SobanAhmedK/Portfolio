@@ -1,20 +1,17 @@
 import { GitlabIcon as GitHub, Linkedin, Mail } from "lucide-react";
-import emailjs from "@emailjs/browser"; // Import EmailJS
-import { useRef } from "react"; // Import useRef for the form
+import emailjs from "@emailjs/browser"; 
+import { useRef } from "react";
 
 function Contact() {
-  const formRef = useRef(); // Create a reference for the form
-
+  const formRef = useRef(); 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Replace these with your EmailJS service ID, template ID, and user ID
     const serviceID = import.meta.env.VITE_SERVICE_ID;
     const templateID = import.meta.env.VITE_TEMPLATE_ID;
     const userID = import.meta.env.VITE_USER_ID;
 
     try {
-      // Log form data for debugging
       const formData = new FormData(formRef.current);
       for (let [key, value] of formData.entries()) {
         console.log(key, value);
@@ -51,25 +48,26 @@ function Contact() {
                 className="flex items-center gap-4 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
               >
                 <Mail className="h-5 w-5" />
-                contact@example.com
+                 ahmedsoban648@gmail.com
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/sobanahmedk/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-              >
+              >  
                 <Linkedin className="h-5 w-5" />
-                linkedin.com/in/username
+              
+                www.linkedin.com/in/sobanahmedk/
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/SobanAhmedK"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
               >
                 <GitHub className="h-5 w-5" />
-                github.com/username
+                github.com/SobanAhmedK
               </a>
             </div>
           </div>

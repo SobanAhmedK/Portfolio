@@ -1,3 +1,6 @@
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+
 function Skills() {
   const skills = [
     { name: "Python", level: 90 },
@@ -21,23 +24,41 @@ function Skills() {
   return (
     <section id="skills" className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold mb-10 text-center">My Tech Stack</h2>
+        <motion.h2
+          className="text-3xl font-bold mb-10 text-center"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          My Tech Stack
+        </motion.h2>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skills.map((skill, index) => (
-            <div key={index} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+            <motion.div
+              key={index}
+              className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+            >
               <div className="flex flex-col gap-2">
                 <div className="flex justify-between items-center">
                   <h3 className="font-medium">{skill.name}</h3>
                   <span className="text-sm text-gray-600 dark:text-gray-400">{skill.level}%</span>
                 </div>
                 <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                  <div
-                    className="bg-indigo-600 dark:bg-indigo-400 h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${skill.level}%` }}
-                  ></div>
+                  <motion.div
+                    className="bg-indigo-600 dark:bg-indigo-400 h-2 rounded-full"
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${skill.level}%` }}
+                    transition={{ duration: 1, ease: "easeInOut" }}
+                  ></motion.div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
