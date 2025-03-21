@@ -36,7 +36,11 @@ function Experience() {
       company: "Artilence",
       period: "Aug 2024 - Oct 2024",
       description:
-        "Collaborated on AI-powered ATS and interview systems using Django, FastAPI, and OpenAI. Developed a student community platform using Golang and WebSockets. Implemented resume parsing, optimized media transfer, and explored RAG solutions with LangChain and vector databases.",
+        `
+- Collaborated to build APIs with Django DRF and FastAPI and React for frontend for an AI-driven ATS system and AI interviewer leveraging OpenAI and VAPI.
+- Developed a student community platform using Golang/Fiber and WebSockets, optimized media transfer with chunking and compression. Parsed resumes and managed complex JSON data for PostgreSQL, ensuring seamless migrations using Alembic.
+- Explored RAG solutions with Python, LangChain, vector databases, and multi-agent systems using LangGraph.
+- Scraped job portals using Python and Beautiful Soup. Collaborated via Slack, Jira, and Git/GitHub.`,
       technologies: ["Django", "FastAPI", "React", "OpenAI", "Golang", "PostgreSQL", "LangChain"],
     },
   ];

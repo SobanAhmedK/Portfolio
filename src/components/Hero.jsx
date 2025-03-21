@@ -2,6 +2,7 @@ import { GitlabIcon as GitHub, Linkedin, Mail, MoveRight, Download, Clipboard } 
 import { useState } from "react";
 import profilePic from "../assets/pic.jpg";
 import Resume from "../assets/Soban-Ahmed-resume.pdf";
+import ChatBot from "./ChatBot";
 
 function Hero() {
   const [showEmail, setShowEmail] = useState(false);
@@ -18,7 +19,7 @@ function Hero() {
   };
 
   return (
-    <section id="hero" className="py-20 md:py-32">
+    <section id="hero" className="py-5 md:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center gap-10">
           <div className="flex-1 space-y-6">
@@ -29,11 +30,11 @@ function Hero() {
               Hi, I'm <span className="text-indigo-600 dark:text-indigo-400">Soban Ahmed</span>
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-[600px]">
-            Bridging AI and Full-Stack Development to Create Scalable, Intelligent Solutions.
+              Bridging AI and Full-Stack Development to Create Scalable, Intelligent Solutions.
             </p>
             <div className="flex gap-4 pt-4">
               <a
-                href="#experience"
+                href="#projects"
                 className="inline-flex items-center px-6 py-3 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
               >
                 View My Work <MoveRight className="ml-2 h-4 w-4" />
@@ -68,9 +69,7 @@ function Hero() {
                 className="relative cursor-pointer"
                 onMouseEnter={() => setShowEmail(true)}
                 onMouseLeave={() => {
-                  setTimeout(() => {setShowEmail(false)
-                    
-                  }, 2000);
+                  setTimeout(() => setShowEmail(false), 2000);
                 }}
                 onClick={redirectToGmail}
               >
@@ -96,6 +95,11 @@ function Hero() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Fix: Render ChatBot component here */}
+      <div>
+        <ChatBot className="fixed top-15 right-10" />
       </div>
     </section>
   );
