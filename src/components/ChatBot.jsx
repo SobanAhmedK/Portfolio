@@ -14,7 +14,7 @@ function ChatBot() {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    const genAI = new GoogleGenerativeAI("AIzaSyA9eCT5oE_gQfHt4gpfO-yRTMQch0LwehY");
+    const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
     setModel(genAI.getGenerativeModel({ model: "gemini-1.5-pro" }));
   }, []);
 
