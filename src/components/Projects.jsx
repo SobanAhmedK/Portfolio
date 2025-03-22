@@ -108,6 +108,19 @@ function Projects() {
               </CardBody>
             </CardContainer>
           ))}
+<div className="flex justify-center items-center col-span-full">
+  <a
+    href="https://github.com/SobanAhmedK"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="relative text-white text-xl font-bold px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg shadow-blue-500/50 
+               transition-all duration-300 transform hover:scale-105 hover:shadow-purple-500/50"
+  >
+    🚀 Explore All Projects →
+    <span className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 opacity-20 blur-lg"></span>
+  </a>
+</div>
+
         </div>
       </div>
     </section>
