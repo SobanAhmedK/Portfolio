@@ -4,6 +4,24 @@ import { Link } from "react-router-dom";
 
 const projects = [
   {
+    title: "Project Management Tool for Remote Teams",
+    description:
+      "A full-stack Kanban-style tool built for small remote teams with multi-tenant architecture, real-time collaboration, video/audio calling, AI-based task summaries via LangChain, role-based project access, and analytics dashboard.",
+    tags: ["Django", "React", "LangChain", "WebRTC", "PostgreSQL"],
+    image: "/project-management.jpg",
+    github: "https://github.com/SobanAhmedK/Project-management-tool/tree/main",
+    live: 0,
+  },
+  {
+    title: "AI-Powered Interview Platform",
+    description:
+      "Developed a full-stack AI mock interview platform using FastAPI, React, and PostgreSQL. Integrated VAPI for dynamic voice-based interviews, resume parsing with LLMs, JWT authentication, and analytics dashboard for personalized feedback.",
+    tags: ["FastAPI", "React", "LLMs", "PostgreSQL", "VAPI"],
+    image: "/ai-interviewer.jpg",
+    github: "https://github.com/vampi-007/AI-Interviewer/tree/behzad",
+    live: 0,
+  },
+  {
     title: "Django Polls Application",
     description:
       "Developed and deployed on AWS (Gunicorn + Nginx) pursuing production-level practices and implemented features like Authentication, Authorization, polls creation, voting, searching, pagination, testing, results display, and a friendly UI.",
@@ -39,25 +57,9 @@ const projects = [
     github: "https://github.com/SobanAhmedK/CarParking-OpenCv-Twillio",
     live: 0,
   },
-  {
-    title: "Ai - Domain Name Finder",
-    description:
-      "Developed an AI-driven NameFinder application that generates business or product name suggestions and verifies domain availability through GoDaddy's API. Implemented in Python , the project emphasizes code quality by incorporating pre-commit hooks and comprehensive test cases.",
-    tags: ["Python", "OpenCv", "Twillio"],
-    image: "/domain.avif",
-    github: "https://github.com/SobanAhmedK/AI---NameFinder-",
-    live: 0,
-  },
-  {
-    title: "Food on Wheels - OOPS",
-    description:
-      "Developed a Restaurant Management System in C++ employing Object-Oriented Programming (OOP) principles. The system features classes for Restaurant, Customer, Rider, and Admin, facilitating functionalities such as menu management, order processing, delivery tracking, and payment handling.",
-    tags: ["Python", "OpenCv", "Twillio"],
-    image: "/food.jpg",
-    github: "https://github.com/SobanAhmedK/OOPS-Project",
-    live: 0,
-  },
+
 ];
+
 
 function Projects() {
   return (
