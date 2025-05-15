@@ -9,8 +9,9 @@ const projects = [
       "A full-stack Kanban-style tool built for small remote teams with multi-tenant architecture, real-time collaboration, video/audio calling, AI-based task summaries via LangChain, role-based project access, and analytics dashboard.",
     tags: ["Django", "React", "LangChain", "WebRTC", "PostgreSQL"],
     image: "/project-management.jpg",
-    github: "https://project-management-tool-two.vercel.app/",
+    github: "https://github.com/SobanAhmedK/Project-management-tool",
     live: 1,
+    liveText: "https://project-management-tool-two.vercel.app/",
   },
   {
     title: "AI-Powered Interview Platform",
@@ -20,6 +21,7 @@ const projects = [
     image: "/ai-interviewer.jpg",
     github: "https://github.com/vampi-007/AI-Interviewer/tree/behzad",
     live: 0,
+    liveText: "",
   },
   {
     title: "Django Polls Application",
@@ -29,6 +31,7 @@ const projects = [
     image: "/polls_app.jpg",
     github: "https://github.com/SobanAhmedK/Django-Official-Polls-app",
     live: 1,
+    liveText: "http://pollssoft.tech/",
   },
   {
     title: "Digital Wallet System",
@@ -38,6 +41,7 @@ const projects = [
     image: "/Digital_wallet.jpg",
     github: "https://github.com/SobanAhmedK/E-wallet-using-FASTAPI",
     live: 0,
+    liveText: "",
   },
   {
     title: "E-Store Platform",
@@ -47,6 +51,7 @@ const projects = [
     image: "/E-store.webp",
     github: "https://github.com/SobanAhmedK/E-store",
     live: 0,
+    liveText: "",
   },
   {
     title: "CarParkling OpenCV and Twillio",
@@ -56,6 +61,7 @@ const projects = [
     image: "/parking.jpg",
     github: "https://github.com/SobanAhmedK/CarParking-OpenCv-Twillio",
     live: 0,
+    liveText: "",
   },
 
 ];
@@ -98,7 +104,7 @@ function Projects() {
                   {project.live === 1 && <CardItem
                     translateZ={20}
                     as="a"
-                    href="https://pollssoft.tech"
+                    href={project.liveText}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-2 rounded-xl bg-blue-600 dark:bg-yellow-400 dark:text-black text-white text-xs font-bold hover:bg-blue-700 dark:hover:bg-yellow-500 animate-bounceFast"
