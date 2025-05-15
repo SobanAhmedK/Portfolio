@@ -9,8 +9,8 @@ const projects = [
       "A full-stack Kanban-style tool built for small remote teams with multi-tenant architecture, real-time collaboration, video/audio calling, AI-based task summaries via LangChain, role-based project access, and analytics dashboard.",
     tags: ["Django", "React", "LangChain", "WebRTC", "PostgreSQL"],
     image: "/project-management.jpg",
-    github: "https://github.com/SobanAhmedK/Project-management-tool/tree/main",
-    live: 0,
+    github: "https://project-management-tool-two.vercel.app/",
+    live: 1,
   },
   {
     title: "AI-Powered Interview Platform",
