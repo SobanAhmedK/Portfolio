@@ -32,6 +32,20 @@ function ExperienceItem({ title, company, period, description, technologies }) {
 function Experience() {
   const experiences = [
     {
+      title: "Associate Full Stack Developer",
+      company: "CodeGraphers",
+      period: "Aug 2025 - Present",
+      description:
+        `
+- Engineered agentic voice agent using voice AI framework Pipecat Python SDK and reduced SST time by 30 percent.
+- Built microservice architecture using AWS ECS tasks and services, deployments, wrote CI/CD pipelines and Dockerfiles.
+- Built a screening bot using Twilio directly with Pipecat using media streams instead of Daily, saving 50 percent cost.
+- Developed a video calling app with custom UI with Vue.ts and Daily API integration. Developed Deepgram transcription bot instead of built-in Daily transcription, saving 30 percent cost.
+- Enhanced performance of API at DB operations by 30 percent in a Django REST application.
+- Used parallel processing and scheduling of tasks using Celery and Celery Beat.`,
+      technologies: ["Python", "Pipecat", "AWS ECS", "CI/CD", "Docker", "Twilio", "Vue.js", "TypeScript", "Daily API", "Deepgram", "Django REST Framework", "Celery"],
+    },
+    {
       title: "Software Engineering Intern",
       company: "Artilence",
       period: "Aug 2024 - Oct 2024",
