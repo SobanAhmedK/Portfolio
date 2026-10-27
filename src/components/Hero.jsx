@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import profilePic from "../assets/Confident Gentleman in Black Suit.png";
-import Resume from "../assets/Soban-Ahmed-Resume.pdf";
+import Resume from "../assets/Soban-Ahmed-resume.pdf";
 import ChatBot from "./ChatBot";
 
 /* ── animation presets ─────────────────────────────────────── */
