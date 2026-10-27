@@ -94,7 +94,7 @@ function ChatBot() {
             {/* Header */}
             <div className="flex justify-between items-center border-b border-brand-border px-6 py-4">
               <h3 className="font-syne font-[600] text-lg text-brand-fg tracking-[-0.02em]">
-                AI Assistant
+                Chat with Soban
               </h3>
               <button
                 onClick={() => setIsOpen(false)}
@@ -108,7 +108,7 @@ function ChatBot() {
             <div className="flex-1 overflow-y-auto space-y-3 p-6">
               {messages.length === 0 && (
                 <p className="font-inter text-[13px] font-[300] text-brand-muted text-center mt-8">
-                  Ask me anything about Soban's experience, projects, or skills.
+                  Ask me about my experience, projects, or skills.
                 </p>
               )}
               {messages.map((msg, i) => (
