@@ -17,7 +17,13 @@ function ChatBot() {
 
   useEffect(() => {
     const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
-    setModel(genAI.getGenerativeModel({ model: "gemini-3.8-flash" }));
+    // gemini-3.8-flash is overloaded (503/timeouts); 3.6-flash is the reliable pick right now
+    setModel(
+      genAI.getGenerativeModel({
+        model: "gemini-3.6-flash",
+        systemInstruction: CONTEXT,
+      })
+    );
   }, []);
 
   useEffect(() => {
@@ -28,13 +34,12 @@ function ChatBot() {
     e.preventDefault();
     if (!input.trim() || !model) return;
 
-    setMessages((prev) => [...prev, { text: input, isBot: false }]);
+    const userText = input.trim();
+    setMessages((prev) => [...prev, { text: userText, isBot: false }]);
     setInput("");
     setIsLoading(true);
 
     try {
-      await new Promise((r) => setTimeout(r, 1500));
-
       const recent = messages.length < 10 ? messages : messages.slice(-9);
       const history = recent.map((msg) => ({
         role:  msg.isBot ? "model" : "user",
@@ -42,11 +47,11 @@ function ChatBot() {
       }));
 
       const chat = model.startChat({
-        history: [{ role: "user", parts: [{ text: CONTEXT }] }, ...history],
+        history,
         generationConfig: { maxOutputTokens: 1000, temperature: 0.3 },
       });
 
-      const result   = await chat.sendMessage(`User: ${input}`);
+      const result   = await chat.sendMessage(userText);
       const response = await result.response.text();
       setMessages((prev) => [...prev, { text: response, isBot: true }]);
     } catch (err) {
