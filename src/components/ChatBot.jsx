@@ -11,13 +11,14 @@ function ChatBot() {
   const [input,     setInput]     = useState("");
   const [messages,  setMessages]  = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
   const [isOpen,    setIsOpen]    = useState(false);
   const [model,     setModel]     = useState(null);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
     const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
-    // gemini-3.8-flash is overloaded (503/timeouts); 3.6-flash is the reliable pick right now
+    // Free-tier friendly Flash model; 3.8 can be overloaded
     setModel(
       genAI.getGenerativeModel({
         model: "gemini-3.6-flash",
@@ -28,11 +29,11 @@ function ChatBot() {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, isLoading, isStreaming]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!input.trim() || !model) return;
+    if (!input.trim() || !model || isLoading || isStreaming) return;
 
     const userText = input.trim();
     setMessages((prev) => [...prev, { text: userText, isBot: false }]);
@@ -48,20 +49,57 @@ function ChatBot() {
 
       const chat = model.startChat({
         history,
-        generationConfig: { maxOutputTokens: 1000, temperature: 0.3 },
+        // Cap output for free-tier quota and snappier replies
+        generationConfig: { maxOutputTokens: 800, temperature: 0.3 },
       });
 
-      const result   = await chat.sendMessage(userText);
-      const response = await result.response.text();
-      setMessages((prev) => [...prev, { text: response, isBot: true }]);
+      const result = await chat.sendMessageStream(userText);
+      let started = false;
+      let full = "";
+
+      for await (const chunk of result.stream) {
+        let piece = "";
+        try {
+          piece = chunk.text();
+        } catch {
+          continue;
+        }
+        if (!piece) continue;
+
+        full += piece;
+
+        if (!started) {
+          started = true;
+          setIsLoading(false);
+          setIsStreaming(true);
+          setMessages((prev) => [...prev, { text: full, isBot: true }]);
+        } else {
+          setMessages((prev) => {
+            const next = [...prev];
+            next[next.length - 1] = { text: full, isBot: true };
+            return next;
+          });
+        }
+      }
+
+      if (!started) {
+        setMessages((prev) => [
+          ...prev,
+          { text: "I didn't get a reply that time — try asking again.", isBot: true },
+        ]);
+      }
     } catch (err) {
       console.error("ChatBot error:", err);
       setMessages((prev) => [
         ...prev,
-        { text: "Unable to fetch a response. Please try again.", isBot: true },
+        {
+          text: "Unable to fetch a response. The free API may be busy — please try again in a moment.",
+          isBot: true,
+        },
       ]);
     } finally {
       setIsLoading(false);
+      setIsStreaming(false);
     }
   };
 
@@ -116,18 +154,25 @@ function ChatBot() {
                   Ask me about my experience, projects, or skills.
                 </p>
               )}
-              {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`p-3.5 max-w-lg font-inter text-[13px] font-[300] leading-relaxed ${
-                    msg.isBot
-                      ? "bg-brand-bg text-brand-fg/90 border border-brand-border"
-                      : "bg-brand-coral text-brand-bg ml-auto"
-                  }`}
-                >
-                  {msg.text}
-                </div>
-              ))}
+              {messages.map((msg, i) => {
+                const isLastBot =
+                  msg.isBot && i === messages.length - 1 && isStreaming;
+                return (
+                  <div
+                    key={i}
+                    className={`p-3.5 max-w-lg font-inter text-[13px] font-[300] leading-relaxed whitespace-pre-wrap ${
+                      msg.isBot
+                        ? "bg-brand-bg text-brand-fg/90 border border-brand-border"
+                        : "bg-brand-coral text-brand-bg ml-auto"
+                    }`}
+                  >
+                    {msg.text}
+                    {isLastBot && (
+                      <span className="inline-block w-[2px] h-[0.9em] ml-0.5 align-[-0.1em] bg-brand-coral animate-pulse" />
+                    )}
+                  </div>
+                );
+              })}
               {isLoading && (
                 <div className="bg-brand-bg border border-brand-border p-3.5 max-w-lg">
                   <span className="font-inter text-[13px] font-[300] text-brand-muted animate-pulse">
@@ -151,7 +196,7 @@ function ChatBot() {
               />
               <button
                 type="submit"
-                disabled={!input.trim() || isLoading}
+                disabled={!input.trim() || isLoading || isStreaming}
                 className="bg-brand-coral text-brand-bg px-4 py-2.5 font-inter font-[600] text-[12px] tracking-wide hover:opacity-90 transition-opacity disabled:opacity-50"
               >
                 <Send className="h-4 w-4" />
