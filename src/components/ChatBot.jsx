@@ -104,22 +104,16 @@ function ChatBot() {
   };
 
   return (
-    <div className="fixed top-[88px] right-5 z-[200]">
-
-      {/* Trigger button */}
-      {!isOpen && (
-        <motion.button
-          onClick={() => setIsOpen(true)}
-          className="bounceFast bg-brand-coral text-brand-bg p-4 rounded-full shadow-xl flex items-center gap-2 hover:opacity-90 transition-opacity font-inter text-sm font-[600]"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          whileHover={{ scale: 1.06 }}
-          style={{ marginTop: "6px", marginRight: "6px" }}
-        >
-          <MessageCircle className="h-5 w-5" />
-          Ask AI About Me
-        </motion.button>
-      )}
+    <>
+      {/* Inline hero CTA — sits with Explore / Resume, not floating over the name */}
+      <button
+        type="button"
+        onClick={() => setIsOpen(true)}
+        className="inline-flex items-center gap-2 px-6 py-3 border border-brand-border text-brand-fg font-inter font-[600] text-sm tracking-wide hover:border-brand-coral hover:text-brand-coral transition-colors"
+      >
+        <MessageCircle className="h-4 w-4" />
+        Ask AI about me
+      </button>
 
       {/* Modal */}
       {isOpen && (
@@ -128,11 +122,13 @@ function ChatBot() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          onClick={() => setIsOpen(false)}
         >
           <motion.div
             className="w-full max-w-3xl h-[78vh] bg-brand-card border border-brand-border shadow-2xl rounded-none flex flex-col"
             initial={{ scale: 0.94 }}
             animate={{ scale: 1 }}
+            onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
             <div className="flex justify-between items-center border-b border-brand-border px-6 py-4">
@@ -205,7 +201,7 @@ function ChatBot() {
           </motion.div>
         </motion.div>
       )}
-    </div>
+    </>
   );
 }
 
