@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import profilePic from "../assets/pic.jpg";
-import Resume from "../assets/Soban-Ahmed-Resume.pdf";
+import Resume from "../assets/Soban-Ahmed-resume.pdf";
 
 function About() {
   return (
