@@ -1,75 +1,101 @@
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import profilePic from "../assets/pic.jpg";
+import Resume from "../assets/Soban-Ahmed-Resume.pdf";
 
 function About() {
-  const stats = [
-    { label: "Experience", value: "8 months" },
-    { label: "Projects Completed", value: "10+" },
-    { label: "Happy Clients", value: "__" },
-    { label: "Technologies Mastered", value: "10+" },
-  ];
-
   return (
-    <section id="about" className="py-20 bg-gray-50 dark:bg-gray-800/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-20 md:py-32 bg-brand-bg">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-10">
+
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          className="mb-16 md:mb-20"
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.7 }}
           viewport={{ once: true }}
-          className="flex flex-col md:flex-row gap-12"
         >
-          {/* Text Section */}
+          <p className="label mb-4">A Little About Me</p>
+          <h2 className="section-heading text-brand-fg">
+            I like building things that actually work.
+          </h2>
+        </motion.div>
+
+        {/* Two-column layout */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+
+          {/* Portrait */}
           <motion.div
-            className="flex-1"
-            initial={{ opacity: 0, x: -50 }}
+            className="relative"
+            initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-6">About Me</h2>
-            <div className="space-y-4 text-gray-600 dark:text-gray-300">
-              <p>
-                <b>From Kashmir’s Serenity to Lahore’s Innovation: A Journey of Growth</b> 
-                Transitioning from the serene landscapes of Kashmir to the fast-paced tech hub of Lahore, 
-                my journey has been one of continuous learning and transformation. 
-                As a BSCS student at the University of Management and Technology, 
-                I have built a strong foundation in computer science, algorithms, databases, and operating systems.
-              </p>
-              <p>
-                My expertise lies in <b>full-stack development, AI-driven applications, and system optimization.</b> 
-                I have worked with technologies like <b>Django, FastAPI, React, Golang, and LangChain</b>, 
-                developing AI-powered ATS systems, real-time applications, and various full-stack projects.
-              </p>
-              <p>
-                Beyond coding, I am passionate about solving real-world problems through AI and machine learning, 
-                continuously seeking to push the boundaries of innovation. For me, computer science is not just about 
-                technology—it’s about creating solutions that improve lives.
-              </p>
+            <div className="relative overflow-hidden bg-brand-card border border-brand-border">
+              <img
+                src={profilePic}
+                alt="Soban Ahmed, Full Stack and AI Engineer, Lahore"
+                className="w-full aspect-[3/4] object-cover object-top"
+                style={{ filter: "grayscale(0.3) contrast(1.05)" }}
+                loading="lazy"
+              />
+              {/* Subtle corner accent */}
+              <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-brand-coral" />
             </div>
           </motion.div>
 
-          {/* Stats Section */}
+          {/* Bio */}
           <motion.div
-            className="flex-1 grid grid-cols-2 gap-6"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
+            className="space-y-6 lg:pt-2"
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            viewport={{ once: true }}
           >
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm text-center transform transition duration-300 hover:scale-105"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-              >
-                <h3 className="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">
-                  {stat.value}
-                </h3>
-                <p className="text-xl text-gray-600 dark:text-gray-400">{stat.label}</p>
-              </motion.div>
-            ))}
+            <p className="body-text">
+              I'm Soban Ahmed, a Full Stack and AI Engineer based in Lahore, Pakistan.
+              My work spans the full product, from React and Vue.js frontends, scalable Python
+              backends, AI-powered features, and cloud-hosted infrastructure that moves
+              beyond prototypes into production.
+            </p>
+            <p className="body-text">
+              I've worked across education technology, applicant tracking systems, retail
+              intelligence, voice AI, multi-agent RAG systems, payment workflows, and real-time
+              applications. I enjoy owning the full picture from interface and API design
+              to data infrastructure, deployment, and the end-user experience.
+            </p>
+            <p className="body-text">
+              I also enjoy learning new AI engineering patterns, exploring system architecture,
+              and helping turn ambiguous product requirements into clear technical solutions.
+            </p>
+
+            {/* Education callout */}
+            <div className="pt-6 border-t border-brand-border">
+              <p className="font-inter text-[11px] font-[500] tracking-[0.18em] uppercase text-brand-muted mb-2">
+                Education
+              </p>
+              <p className="font-inter text-[14px] font-[300] text-brand-fg leading-relaxed">
+                B.S. Computer Science — University of Management and Technology (UMT), Lahore
+              </p>
+            </div>
+
+            {/* Resume link */}
+            <a
+              href={Resume}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 font-inter text-sm font-[500] text-brand-muted hover:text-brand-coral transition-colors group"
+            >
+              Download my resume
+              <ArrowUpRight
+                size={14}
+                className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+              />
+            </a>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

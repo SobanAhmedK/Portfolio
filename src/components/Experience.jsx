@@ -1,71 +1,84 @@
-import { Briefcase } from "lucide-react";
+import { motion } from "framer-motion";
+import { experiences } from "../data/experience";
 
-function ExperienceItem({ title, company, period, description, technologies }) {
+function ExperienceEntry({ exp, index }) {
   return (
-    <div className="relative pl-8 sm:pl-32 py-6 group">
-      <div className="text-xl text-indigo-600 dark:text-indigo-400 mb-1 sm:mb-0 sm:absolute sm:left-0 sm:top-12 sm:w-32">
-        {period}
-      </div>
-      <div className="absolute left-0 top-10 mt-0.5 h-10 w-10 flex items-center justify-center rounded-full bg-indigo-600 text-white sm:left-[8.5rem] shadow-lg">
-        <Briefcase className="h-5 w-5" />
-      </div>
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md sm:ml-20">
-        <div className="flex flex-col gap-4">
-          <div>
-            <h3 className="font-bold text-xl">{title}</h3>
-            <p className="text-gray-600 dark:text-gray-400">{company}</p>
-          </div>
-          <p className="text-gray-600 dark:text-gray-300">{description}</p>
-          <div className="flex flex-wrap gap-2">
-            {technologies.map((tech, index) => (
-              <span key={index} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">
-                {tech}
-              </span>
-            ))}
-          </div>
+    <motion.div
+      className="grid md:grid-cols-[220px_1fr] gap-6 md:gap-12 py-12 md:py-14 border-b border-brand-border last:border-b-0"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.65, delay: index * 0.1 }}
+      viewport={{ once: true }}
+    >
+      {/* Left: meta */}
+      <div className="flex md:flex-col gap-4 md:gap-3 md:pt-0.5">
+        <div>
+          <p className="font-inter text-[11px] font-[500] tracking-[0.15em] uppercase text-brand-coral mb-1">
+            {exp.period}
+          </p>
+          <p className="font-inter text-[11px] font-[300] text-brand-muted tracking-wide">
+            {exp.location}
+          </p>
         </div>
       </div>
-    </div>
+
+      {/* Right: content */}
+      <div>
+        {/* Company + role */}
+        <div className="mb-5">
+          <h3 className="font-syne font-[600] text-xl md:text-2xl text-brand-fg tracking-[-0.02em] leading-tight mb-1">
+            {exp.company}
+          </h3>
+          <p className="font-inter text-[13px] font-[400] text-brand-muted">
+            {exp.role}
+          </p>
+        </div>
+
+        {/* Description */}
+        <p className="font-inter text-[14px] font-[300] text-brand-muted leading-relaxed mb-7">
+          {exp.description}
+        </p>
+
+        {/* Contributions */}
+        <ul className="space-y-3">
+          {exp.contributions.map((c, i) => (
+            <li
+              key={i}
+              className="flex gap-4 font-inter text-[13px] font-[300] text-brand-muted leading-relaxed"
+            >
+              <span className="w-1 h-1 rounded-full bg-brand-coral mt-[9px] flex-shrink-0" />
+              {c}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </motion.div>
   );
 }
 
 function Experience() {
-  const experiences = [
-    {
-      title: "Associate Full Stack Developer",
-      company: "CodeGraphers",
-      period: "Aug 2025 - Present",
-      description:
-        `
-- Engineered agentic voice agent using voice AI framework Pipecat Python SDK and reduced SST time by 30 percent.
-- Built microservice architecture using AWS ECS tasks and services, deployments, wrote CI/CD pipelines and Dockerfiles.
-- Built a screening bot using Twilio directly with Pipecat using media streams instead of Daily, saving 50 percent cost.
-- Developed a video calling app with custom UI with Vue.ts and Daily API integration. Developed Deepgram transcription bot instead of built-in Daily transcription, saving 30 percent cost.
-- Enhanced performance of API at DB operations by 30 percent in a Django REST application.
-- Used parallel processing and scheduling of tasks using Celery and Celery Beat.`,
-      technologies: ["Python", "Pipecat", "AWS ECS", "CI/CD", "Docker", "Twilio", "Vue.js", "TypeScript", "Daily API", "Deepgram", "Django REST Framework", "Celery"],
-    },
-    {
-      title: "Software Engineering Intern",
-      company: "Artilence",
-      period: "Aug 2024 - Oct 2024",
-      description:
-        `
-- Collaborated to build APIs with Django DRF and FastAPI and React for frontend for an AI-driven ATS system and AI interviewer leveraging OpenAI and VAPI.
-- Developed a student community platform using Golang/Fiber and WebSockets, optimized media transfer with chunking and compression. Parsed resumes and managed complex JSON data for PostgreSQL, ensuring seamless migrations using Alembic.
-- Explored RAG solutions with Python, LangChain, vector databases, and multi-agent systems using LangGraph.
-- Scraped job portals using Python and Beautiful Soup. Collaborated via Slack, Jira, and Git/GitHub.`,
-      technologies: ["Django", "FastAPI", "React", "OpenAI", "Golang", "PostgreSQL", "LangChain"],
-    },
-  ];
-
   return (
-    <section id="experience" className="py-20 bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold mb-10 text-center text-gray-800 dark:text-gray-200">Work Experience</h2>
-        <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-300 dark:before:via-gray-700 before:to-transparent">
-          {experiences.map((experience, index) => (
-            <ExperienceItem key={index} {...experience} />
+    <section id="experience" className="py-20 md:py-32 bg-brand-card">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-10">
+
+        {/* Header */}
+        <motion.div
+          className="mb-4"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+        >
+          <p className="label mb-4">Experience</p>
+          <h2 className="section-heading text-brand-fg">
+            From APIs to AI-powered products.
+          </h2>
+        </motion.div>
+
+        {/* Entries */}
+        <div className="border-t border-brand-border mt-12">
+          {experiences.map((exp, i) => (
+            <ExperienceEntry key={exp.id} exp={exp} index={i} />
           ))}
         </div>
       </div>

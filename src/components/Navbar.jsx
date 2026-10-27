@@ -1,98 +1,155 @@
-"use client"
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { Link } from "react-scroll";
+import { motion, AnimatePresence } from "framer-motion";
+import { config } from "../data/config";
 
-import { useState, useEffect } from "react"
-import { Menu, X, Moon, Sun } from "lucide-react"
-import { Link } from "react-scroll"
+const navItems = [
+  { name: "Work",        to: "projects"    },
+  { name: "Engineering", to: "engineering" },
+  { name: "Impact",      to: "impact"      },
+  { name: "About",       to: "about"       },
+  { name: "Contact",     to: "contact"     },
+];
 
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [isDark, setIsDark] = useState(true)
+  const [scrolled, setScrolled] = useState(false);
+  const [isOpen,   setIsOpen]   = useState(false);
 
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
-    }
-  }, [isDark])
+    const onScroll = () => setScrolled(window.scrollY > 32);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  const navItems = [
-    { name: "About", to: "about" },
-    { name: "Skills", to: "skills" },
-    { name: "Projects", to: "projects" },
-    { name: "Experience", to: "experience" },
-    { name: "Contact", to: "contact" },
-  ]
+  // Lock body scroll while mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [isOpen]);
 
   return (
-    <nav className="sticky top-0 z-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex-shrink-0">
-            <Link to="hero" smooth={true} className="text-2xl font-bold cursor-pointer">
-              <span className="text-indigo-600 dark:text-indigo-400">Soban</span>
-              Portfolio
-            </Link>
-          </div>
-           
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-8">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.to}
-                  smooth={true}
-                  className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer transition-colors"
-                >
-                  {item.name}
-                </Link>
-              ))}
-              <button
-                onClick={() => setIsDark(!isDark)}
-                className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300"
-              >
-                {isDark ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-            </div>
-          </div>
+    <>
+      <nav
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-brand-bg/95 backdrop-blur-md border-b border-brand-border"
+            : "bg-transparent border-b border-transparent"
+        }`}
+      >
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-10 h-[72px] flex items-center justify-between">
 
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center gap-4">
-            <button
-              onClick={() => setIsDark(!isDark)}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300"
-            >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
-            <button onClick={() => setIsOpen(!isOpen)} className="text-gray-600 dark:text-gray-300">
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-      </div>
+          {/* Monogram */}
+          <Link
+            to="hero"
+            smooth
+            offset={-72}
+            className="font-syne font-extrabold text-2xl text-brand-fg tracking-tight cursor-pointer select-none"
+          >
+            SA.
+          </Link>
 
-      {/* Mobile Navigation */}
-      {isOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          {/* Desktop nav */}
+          <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.to}
-                smooth={true}
-                className="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer"
-                onClick={() => setIsOpen(false)}
+                smooth
+                offset={-72}
+                className="font-inter text-[13px] font-[400] text-brand-muted hover:text-brand-fg transition-colors duration-200 cursor-pointer"
               >
                 {item.name}
               </Link>
             ))}
           </div>
+
+          {/* Desktop CTA */}
+          <a
+            href={`mailto:${config.email}`}
+            className="hidden md:inline-flex items-center px-5 py-2 rounded-full bg-brand-coral text-brand-bg font-inter text-[12px] font-[600] tracking-wide hover:opacity-90 transition-opacity"
+          >
+            Let's connect
+          </a>
+
+          {/* Mobile controls */}
+          <div className="md:hidden flex items-center gap-4">
+            <a
+              href={`mailto:${config.email}`}
+              className="inline-flex items-center px-4 py-1.5 rounded-full bg-brand-coral text-brand-bg font-inter text-[11px] font-[600] tracking-wide"
+            >
+              Connect
+            </a>
+            <button
+              onClick={() => setIsOpen(true)}
+              aria-label="Open menu"
+              className="text-brand-fg"
+            >
+              <Menu size={22} />
+            </button>
+          </div>
         </div>
-      )}
-    </nav>
-  )
+      </nav>
+
+      {/* Mobile full-screen overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="fixed inset-0 z-[60] bg-brand-bg flex flex-col"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            {/* Header */}
+            <div className="flex justify-between items-center px-6 h-[72px]">
+              <span className="font-syne font-extrabold text-2xl text-brand-fg">SA.</span>
+              <button
+                onClick={() => setIsOpen(false)}
+                aria-label="Close menu"
+                className="text-brand-fg"
+              >
+                <X size={22} />
+              </button>
+            </div>
+
+            {/* Large nav links */}
+            <div className="flex-1 flex flex-col justify-center px-8 gap-6">
+              {navItems.map((item, i) => (
+                <motion.div
+                  key={item.name}
+                  initial={{ opacity: 0, x: -24 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: i * 0.07 }}
+                >
+                  <Link
+                    to={item.to}
+                    smooth
+                    offset={-72}
+                    className="block font-syne font-[600] text-5xl text-brand-fg hover:text-brand-coral transition-colors duration-200 cursor-pointer"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Bottom */}
+            <div className="px-8 pb-12">
+              <a
+                href={`mailto:${config.email}`}
+                className="inline-flex items-center px-6 py-3 rounded-full bg-brand-coral text-brand-bg font-inter text-sm font-[600] tracking-wide"
+                onClick={() => setIsOpen(false)}
+              >
+                Let's connect
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
 }
 
-export default Navbar
-
+export default Navbar;

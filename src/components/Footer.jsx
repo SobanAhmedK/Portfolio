@@ -1,48 +1,60 @@
-import { GitlabIcon as GitHub, Linkedin, Mail } from "lucide-react"
+import { Link } from "react-scroll";
+import { config } from "../data/config";
+
+const socialLinks = [
+  { label: "Email",    href: `mailto:${config.email}`, external: false },
+  { label: "GitHub",   href: config.github,            external: true  },
+  { label: "LinkedIn", href: config.linkedin,          external: true  },
+];
 
 function Footer() {
   return (
-    <footer className="py-8 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4 md:mb-0">
-            <span className="text-2xl font-bold">
-              <span className="text-indigo-600 dark:text-indigo-400">Soban</span>
-              Portfolio
-            </span>
+    <footer className="bg-brand-foot border-t border-brand-border">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-10">
+
+        {/* Main row */}
+        <div className="py-8 flex flex-col md:flex-row items-center justify-between gap-5">
+
+          {/* Left: monogram name */}
+          <Link
+            to="hero"
+            smooth
+            offset={-72}
+            className="font-syne font-extrabold text-xl text-brand-fg tracking-tight cursor-pointer select-none"
+          >
+            SOBAN AHMED.
+          </Link>
+
+          {/* Center: role */}
+          <p className="font-inter text-[10px] font-[500] tracking-[0.2em] uppercase text-brand-muted">
+            Full Stack &amp; AI Engineer
+          </p>
+
+          {/* Right: social links */}
+          <div className="flex items-center gap-6">
+            {socialLinks.map(({ label, href, external }) => (
+              <a
+                key={label}
+                href={href}
+                target={external ? "_blank" : undefined}
+                rel={external ? "noopener noreferrer" : undefined}
+                className="font-inter text-[12px] font-[400] text-brand-muted hover:text-brand-coral transition-colors duration-200"
+              >
+                {label}
+              </a>
+            ))}
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">
-            © {new Date().getFullYear()} Soban Ahmed. All rights reserved.
-          </div>
-          <div className="flex gap-4 mt-4 md:mt-0">
-            <a
-              href="https://github.com/SobanAhmedK"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-            >
-              <GitHub className="h-5 w-5" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/sobanahmedk/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-            >
-              <Linkedin className="h-5 w-5" />
-            </a>
-            <a
-              href="mailto:ahmedsoban648@gmail.com"
-              className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-            >
-              <Mail className="h-5 w-5" />
-            </a>
-          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="border-t border-brand-border py-5 text-center">
+          <p className="font-inter text-[11px] font-[300] text-brand-muted/60">
+            &copy; {new Date().getFullYear()} Soban Ahmed. Built with intention.
+          </p>
         </div>
       </div>
     </footer>
-  )
+  );
 }
 
-export default Footer
-
+export default Footer;

@@ -1,137 +1,96 @@
-import { GitlabIcon as GitHub, Linkedin, Mail } from "lucide-react";
-import emailjs from "@emailjs/browser"; 
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { config } from "../data/config";
+import Resume from "../assets/Soban-Ahmed-Resume.pdf";
 
 function Contact() {
-  const formRef = useRef(); 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const serviceID = import.meta.env.VITE_SERVICE_ID;
-    const templateID = import.meta.env.VITE_TEMPLATE_ID;
-    const userID = import.meta.env.VITE_USER_ID;
-
-    try {
-      const formData = new FormData(formRef.current);
-      for (let [key, value] of formData.entries()) {
-        console.log(key, value);
-      }
-
-      // Send the form data using EmailJS
-      const response = await emailjs.sendForm(serviceID, templateID, formRef.current, userID);
-
-      if (response.status === 200) {
-        alert("Message sent successfully!");
-        formRef.current.reset(); 
-      } else {
-        alert("Oops! Something went wrong. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error sending email:", error);
-      alert("Oops! Something went wrong. Please try again.");
-    }
-  };
-
   return (
-    <section id="contact" className="py-20 bg-gray-50 dark:bg-gray-800/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row gap-12">
-          <div className="flex-1">
-            <h2 className="text-3xl font-bold mb-6">Get In Touch</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-8">
-              I'm currently available for freelance work and full-time positions. If you have a project that needs some
-              creative touch, or if you're looking to hire, feel free to reach out.
-            </p>
-            <div className="space-y-4">
-              <a
-                href="mailto:contact@example.com"
-                className="flex items-center gap-4 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-              >
-                <Mail className="h-5 w-5" />
-                 ahmedsoban648@gmail.com
-              </a>
-              <a
-                href="https://www.linkedin.com/in/sobanahmedk/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-              >  
-                <Linkedin className="h-5 w-5" />
-              
-                www.linkedin.com/in/sobanahmedk/
-              </a>
-              <a
-                href="https://github.com/SobanAhmedK"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-              >
-                <GitHub className="h-5 w-5" />
-                github.com/SobanAhmedK
-              </a>
-            </div>
+    <section id="contact" className="bg-brand-coral py-20 md:py-32">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-10">
+
+        {/* Label */}
+        <motion.p
+          className="font-inter text-[10px] font-[600] tracking-[0.2em] uppercase text-brand-bg/70 mb-6"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          Have a project in mind?
+        </motion.p>
+
+        {/* Heading */}
+        <motion.h2
+          className="font-syne font-[600] text-brand-bg leading-tight tracking-[-0.03em] mb-8"
+          style={{ fontSize: "clamp(36px, 5vw, 80px)" }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.05 }}
+          viewport={{ once: true }}
+        >
+          Let's build something meaningful.
+        </motion.h2>
+
+        {/* Description */}
+        <motion.p
+          className="font-inter text-[15px] md:text-[17px] font-[300] text-brand-bg/75 leading-[1.75] max-w-xl mb-12"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.1 }}
+          viewport={{ once: true }}
+        >
+          Interested in backend engineering, AI-powered products, voice agents, or production
+          infrastructure? I'm open to connecting with people who are building ambitious things.
+        </motion.p>
+
+        {/* Primary CTA */}
+        <motion.div
+          className="flex flex-wrap items-center gap-6 md:gap-10"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.15 }}
+          viewport={{ once: true }}
+        >
+          <a
+            href={`mailto:${config.email}`}
+            className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-bg text-brand-fg font-inter font-[600] text-sm tracking-wide hover:bg-brand-bg/90 transition-colors group"
+          >
+            Email me
+            <ArrowUpRight
+              size={15}
+              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200"
+            />
+          </a>
+
+          {/* Secondary links */}
+          <div className="flex flex-wrap items-center gap-7">
+            <a
+              href={config.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-inter text-sm font-[500] text-brand-bg/75 hover:text-brand-bg transition-colors"
+            >
+              GitHub ↗
+            </a>
+            <a
+              href={config.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-inter text-sm font-[500] text-brand-bg/75 hover:text-brand-bg transition-colors"
+            >
+              LinkedIn ↗
+            </a>
+            <a
+              href={Resume}
+              target="_blank"
+              rel="noreferrer"
+              className="font-inter text-sm font-[500] text-brand-bg/75 hover:text-brand-bg transition-colors"
+            >
+              Resume ↗
+            </a>
           </div>
-          <div className="flex-1">
-            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-                    required
-                  />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="4"
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-                  required
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                className="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-              >
-                Send Message
-              </button>
-            </form>
-          </div>
-        </div>
+        </motion.div>
+
       </div>
     </section>
   );
