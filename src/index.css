@@ -151,3 +151,100 @@
   letter-spacing: 0.15em;
   color: var(--coral);
 }
+
+/* ─────────────────────────────────────────────────────────────
+   AI chat FAB — entrance attention + shine
+───────────────────────────────────────────────────────────── */
+.ai-fab {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.ai-fab::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 42%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 58%,
+    transparent 100%
+  );
+  transform: translateX(-130%) skewX(-12deg);
+  animation: ai-fab-shine 5s ease-in-out 2.4s infinite;
+}
+
+.ai-fab-glow {
+  box-shadow:
+    0 0 0 0 rgba(245, 92, 64, 0.45),
+    0 14px 40px rgba(0, 0, 0, 0.5);
+  animation: ai-fab-glow 2.4s ease-in-out infinite;
+}
+
+.ai-fab-glow.is-spotlight {
+  animation: ai-fab-glow-hot 1.6s ease-in-out infinite;
+}
+
+.ai-fab-ripple {
+  position: absolute;
+  inset: -10px;
+  border: 1px solid hsl(8, 92%, 62%);
+  pointer-events: none;
+  opacity: 0;
+  animation: ai-fab-ripple 2.2s ease-out infinite;
+}
+
+.ai-fab-ripple:nth-child(2) {
+  animation-delay: 0.7s;
+}
+
+@keyframes ai-fab-shine {
+  0%, 62% { transform: translateX(-130%) skewX(-12deg); }
+  78%     { transform: translateX(130%) skewX(-12deg); }
+  100%    { transform: translateX(130%) skewX(-12deg); }
+}
+
+@keyframes ai-fab-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 0 rgba(245, 92, 64, 0.0),
+      0 14px 40px rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    box-shadow:
+      0 0 28px 2px rgba(245, 92, 64, 0.35),
+      0 14px 40px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes ai-fab-glow-hot {
+  0%, 100% {
+    box-shadow:
+      0 0 18px 2px rgba(245, 92, 64, 0.35),
+      0 18px 48px rgba(0, 0, 0, 0.55);
+  }
+  50% {
+    box-shadow:
+      0 0 40px 8px rgba(245, 92, 64, 0.55),
+      0 18px 48px rgba(0, 0, 0, 0.55);
+  }
+}
+
+@keyframes ai-fab-ripple {
+  0%   { transform: scale(0.92); opacity: 0.55; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-fab::after,
+  .ai-fab-glow,
+  .ai-fab-glow.is-spotlight,
+  .ai-fab-ripple {
+    animation: none;
+  }
+}

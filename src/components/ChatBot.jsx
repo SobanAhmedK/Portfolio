@@ -14,6 +14,8 @@ function ChatBot() {
   const [isStreaming, setIsStreaming] = useState(false);
   const [isOpen,    setIsOpen]    = useState(false);
   const [model,     setModel]     = useState(null);
+  // First few seconds: oversized + hotter glow so visitors notice it immediately
+  const [spotlight, setSpotlight] = useState(true);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -25,6 +27,11 @@ function ChatBot() {
         systemInstruction: CONTEXT,
       })
     );
+  }, []);
+
+  useEffect(() => {
+    const t = setTimeout(() => setSpotlight(false), 5200);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
@@ -105,15 +112,59 @@ function ChatBot() {
 
   return (
     <>
-      {/* Inline hero CTA — sits with Explore / Resume, not floating over the name */}
-      <button
-        type="button"
-        onClick={() => setIsOpen(true)}
-        className="inline-flex items-center gap-2 px-6 py-3 border border-brand-border text-brand-fg font-inter font-[600] text-sm tracking-wide hover:border-brand-coral hover:text-brand-coral transition-colors"
-      >
-        <MessageCircle className="h-4 w-4" />
-        Ask AI about me
-      </button>
+      {/*
+        Professional chat FAB: fixed bottom-right (Intercom-style).
+        Stays visible while scrolling, never covers the hero name.
+      */}
+      {!isOpen && (
+        <motion.div
+          className="fixed bottom-5 right-4 sm:bottom-8 sm:right-8 z-[200]"
+          style={{
+            paddingBottom: "env(safe-area-inset-bottom, 0px)",
+            transformOrigin: "bottom right",
+          }}
+          initial={{ opacity: 0, scale: 0.55, y: 36 }}
+          animate={{
+            opacity: 1,
+            scale: spotlight ? 1.22 : 1,
+            y: 0,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 260,
+            damping: 18,
+            delay: spotlight ? 0.85 : 0,
+            mass: 0.85,
+          }}
+        >
+          {/* Expanding ripples during spotlight */}
+          {spotlight && (
+            <>
+              <span className="ai-fab-ripple" aria-hidden />
+              <span className="ai-fab-ripple" aria-hidden />
+            </>
+          )}
+
+          <button
+            type="button"
+            onClick={() => setIsOpen(true)}
+            aria-label="Ask AI about me"
+            className={`ai-fab ai-fab-glow group relative flex items-center gap-2.5 bg-brand-coral text-brand-bg pl-3.5 pr-4 py-3 sm:pl-4 sm:pr-5 sm:py-3.5 font-inter font-[600] text-[13px] sm:text-sm tracking-wide hover:brightness-110 transition-[filter,transform] duration-200 ${
+              spotlight ? "is-spotlight" : ""
+            }`}
+          >
+            <span className="relative z-[1] flex h-8 w-8 items-center justify-center bg-brand-bg/15">
+              <MessageCircle className="h-4 w-4" />
+            </span>
+            <span className="relative z-[1] flex flex-col items-start leading-tight text-left">
+              <span>Ask AI about me</span>
+              <span className="font-inter font-[400] text-[10px] sm:text-[11px] text-brand-bg/70 tracking-wide">
+                Instant answers
+              </span>
+            </span>
+          </button>
+        </motion.div>
+      )}
 
       {/* Modal */}
       {isOpen && (
@@ -125,7 +176,7 @@ function ChatBot() {
           onClick={() => setIsOpen(false)}
         >
           <motion.div
-            className="w-full max-w-3xl h-[78vh] bg-brand-card border border-brand-border shadow-2xl rounded-none flex flex-col"
+            className="w-full max-w-3xl h-[78vh] max-h-[900px] bg-brand-card border border-brand-border shadow-2xl rounded-none flex flex-col"
             initial={{ scale: 0.94 }}
             animate={{ scale: 1 }}
             onClick={(e) => e.stopPropagation()}

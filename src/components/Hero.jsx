@@ -139,7 +139,7 @@ function Hero() {
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap items-center gap-4 mb-6">
+          <div className="flex flex-wrap items-center gap-5 mb-6">
             <a
               href="#engineering"
               onClick={(e) => {
@@ -154,7 +154,6 @@ function Hero() {
                 className="group-hover:translate-x-1 transition-transform duration-200"
               />
             </a>
-            <ChatBot />
             <a
               href={Resume}
               target="_blank"
@@ -180,6 +179,8 @@ function Hero() {
         </div>
       </motion.div>
 
+      {/* Fixed chat launcher — always visible, away from hero name */}
+      <ChatBot />
     </section>
   );
 }
