@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-scroll";
 import { motion, AnimatePresence } from "framer-motion";
-import { config } from "../data/config";
+import { mailtoHref } from "../data/config";
 
 const navItems = [
   { name: "Work",        to: "projects"    },
@@ -66,7 +66,7 @@ function Navbar() {
 
           {/* Desktop CTA */}
           <a
-            href={`mailto:${config.email}`}
+            href={mailtoHref}
             className="hidden md:inline-flex items-center px-5 py-2 rounded-full bg-brand-coral text-brand-bg font-inter text-[12px] font-[600] tracking-wide hover:opacity-90 transition-opacity"
           >
             Let's connect
@@ -75,7 +75,7 @@ function Navbar() {
           {/* Mobile controls */}
           <div className="md:hidden flex items-center gap-4">
             <a
-              href={`mailto:${config.email}`}
+              href={mailtoHref}
               className="inline-flex items-center px-4 py-1.5 rounded-full bg-brand-coral text-brand-bg font-inter text-[11px] font-[600] tracking-wide"
             >
               Connect
@@ -138,7 +138,7 @@ function Navbar() {
             {/* Bottom */}
             <div className="px-8 pb-12">
               <a
-                href={`mailto:${config.email}`}
+                href={mailtoHref}
                 className="inline-flex items-center px-6 py-3 rounded-full bg-brand-coral text-brand-bg font-inter text-sm font-[600] tracking-wide"
                 onClick={() => setIsOpen(false)}
               >

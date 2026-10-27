@@ -11,3 +11,9 @@ export const config = {
   linkedin:  "https://www.linkedin.com/in/sobanahmedk/",
   portfolio: "https://soban-ahmed-porfolio.vercel.app",
 };
+
+/**
+ * Plain mailto only. Outlook mishandles "Name <email>" and often
+ * shows the address duplicated as "email <email>".
+ */
+export const mailtoHref = `mailto:${config.email}?subject=${encodeURIComponent("Hello Soban - from your portfolio")}`;

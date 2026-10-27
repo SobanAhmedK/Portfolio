@@ -1,8 +1,8 @@
 import { Link } from "react-scroll";
-import { config } from "../data/config";
+import { config, mailtoHref } from "../data/config";
 
 const socialLinks = [
-  { label: "Email",    href: `mailto:${config.email}`, external: false },
+  { label: "Email",    href: mailtoHref,               external: false },
   { label: "GitHub",   href: config.github,            external: true  },
   { label: "LinkedIn", href: config.linkedin,          external: true  },
 ];

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { config } from "../data/config";
+import { config, mailtoHref } from "../data/config";
 import Resume from "../assets/Soban-Ahmed-resume.pdf";
 
 function Contact() {
@@ -52,7 +52,7 @@ function Contact() {
           viewport={{ once: true }}
         >
           <a
-            href={`mailto:${config.email}`}
+            href={mailtoHref}
             className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-bg text-brand-fg font-inter font-[600] text-sm tracking-wide hover:bg-brand-bg/90 transition-colors group"
           >
             Email me
